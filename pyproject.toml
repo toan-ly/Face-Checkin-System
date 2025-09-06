@@ -1,0 +1,17 @@
+[project]
+name = "face-checkin-system"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "facenet-pytorch==2.6.0",
+    "faiss-cpu==1.11.0",
+    "matplotlib==3.10.3",
+    "numpy==1.26.0",
+    "opencv-python-headless==4.8.1.78",
+    "plotly==6.2.0",
+    "scikit-learn==1.7.0",
+    "streamlit==1.46.1",
+    "torchvision==0.17.2",
+]
