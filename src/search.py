@@ -2,7 +2,6 @@ import faiss
 import numpy as np
 from .config import *
 from .embeddings import *
-from .utils import load_facenet_model
 
 # def search_similar_images(query_image_path, top_k=TOP_K):
 #     # Load the FAISS index

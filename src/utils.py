@@ -43,8 +43,3 @@ def get_avt_img(employee_name):
         if os.path.exists(img_path):
             return img_path
     return "https://via.placeholder.com/300?text=No+Photo"
-
-def load_facenet_model():
-    from facenet_pytorch import InceptionResnetV1
-    model = InceptionResnetV1(pretrained='vggface2').eval()
-    return model
