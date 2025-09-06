@@ -7,7 +7,8 @@ from embeddings import img_to_feature
 def build_feature_index(df, model):
     index = faiss.IndexFlatIP(VECTOR_DIM_FEATURE)
     label_map = []
-    for _, row in tqdm(df.iterrows(), total=len(df), desc="Building feature index"):
+
+    for _, row in tqdm(df.iterrows(), total=len(df), desc="Building index"):
         try:
             features = img_to_feature(row['image_path'], model=model)
             index.add(np.array([features]))

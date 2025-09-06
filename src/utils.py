@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from PIL import Image
-from .search import search_similar_images
+from .search import search_similar_features
 from .config import *
 import os
 
@@ -13,10 +13,10 @@ def display_query_and_top_matches(query_image_path, df, top_k=5):
     plt.title("Query Image")
     plt.show()
 
-    matches = search_similar_images(query_image_path, top_k=top_k)
+    matches = search_similar_features(query_image_path, top_k=top_k)
 
     top_matches = []
-    for name, score in matches:
+    for name, score, idx in matches:
         img_path = df[df['label'] == name]['image_path'].values[0]
         top_matches.append((img_path, score))
 
@@ -35,9 +35,16 @@ def visualize_embeddings(query_embedding=None, matches=None):
     pass
 
 def get_avt_img(employee_name):
-    img_path = os.path.join(DATASET_PATH, f"avt_{employee_name}.jpg")
-    if os.path.exists(img_path):
-        return Image.open(img_path).resize((IMAGE_SIZE, IMAGE_SIZE))
-    else:
-        return "https://via.placeholder.com/300?text=No+Photo"
+    """
+    Return avatar image path for an employee given their name
+    """
+    for ext in ['.jpg', '.png', '.jpeg', '.JPG']:
+        img_path = os.path.join(DATASET_PATH, f"avt_{employee_name}{ext}")
+        if os.path.exists(img_path):
+            return img_path
+    return "https://via.placeholder.com/300?text=No+Photo"
 
+def load_facenet_model():
+    from facenet_pytorch import InceptionResnetV1
+    model = InceptionResnetV1(pretrained='vggface2').eval()
+    return model
