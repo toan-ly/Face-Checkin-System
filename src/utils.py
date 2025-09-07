@@ -3,6 +3,11 @@ from PIL import Image
 from .search import search_similar_features
 from .config import *
 import os
+from typing import List, Tuple
+import plotly.express as px
+import plotly.graph_objects as go
+import numpy as np
+import pandas as pd
 
 def display_query_and_top_matches(query_image_path, df, top_k=5):
     query_image = Image.open(query_image_path).resize((IMAGE_SIZE, IMAGE_SIZE))
@@ -31,9 +36,6 @@ def display_query_and_top_matches(query_image_path, df, top_k=5):
     plt.tight_layout()
     plt.show()
 
-def visualize_embeddings(query_embedding=None, matches=None):
-    pass
-
 def get_avt_img(employee_name):
     """
     Return avatar image path for an employee given their name
@@ -43,3 +45,6 @@ def get_avt_img(employee_name):
         if os.path.exists(img_path):
             return img_path
     return "https://via.placeholder.com/300?text=No+Photo"
+
+def visualize_embeddings(query_embedding=None, matches=None):
+    pass

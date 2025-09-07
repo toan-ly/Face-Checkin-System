@@ -9,7 +9,7 @@ def load_dataset(dataset_path):
     labels = []
 
     for filename in os.listdir(dataset_path):
-        if filename.endswith(('.png', '.jpg', '.jpeg', '.JPG')):
+        if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
             img_paths.append(os.path.join(dataset_path, filename))
             filename_no_ext = filename.split('.')[0]
             label = filename_no_ext[4:] # Remove "avt_" prefix

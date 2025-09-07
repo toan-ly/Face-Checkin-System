@@ -94,7 +94,7 @@ def load_faiss_index():
 
     return index, label_map, embeddings
 
-face_recognition_model = load_facenet_model()
+# face_recognition_model = load_facenet_model()
 index, label_map, all_embeddings = load_faiss_index()
 
 # State
@@ -137,14 +137,14 @@ if page == "👥 Employee List":
 elif page == "📸 Check-in":
     st.markdown("### 📸 Employee Check-in")
 
-    col_cam, col_up = st.columns(2)
-    with col_cam:
-        if st.button("📷 Use Camera", use_container_width=True, type="primary"):
-            st.session_state.capture_clicked = True
-    with col_up:
-        uploaded_file = st.file_uploader("Upload an Image", type=["jpg", "jpeg", "png"])
-        if uploaded_file:
-            st.session_state.captured_image = crop_center_square(Image.open(uploaded_file).convert("RGB"))
+    # col_cam, col_up = st.columns(2)
+    # with col_cam:
+    if st.button("📷 Use Camera", use_container_width=True, type="primary"):
+        st.session_state.capture_clicked = True
+    uploaded_file = st.file_uploader("Upload an Image", type=["jpg", "jpeg", "png"])
+    if uploaded_file:
+        st.session_state.captured_image = crop_center_square(Image.open(uploaded_file).convert("RGB"))
+    # with col_up:
 
     # Camera capture
     if st.session_state.capture_clicked:
@@ -188,7 +188,7 @@ elif page == "📸 Check-in":
         with st.spinner("🔍 Identifying employee..."):
             query_embedding = img_to_feature(st.session_state.captured_image, face_recognition_model)
             st.session_state.query_embedding = query_embedding
-            matches = search_similar_features(query_embedding, k=5, threshold=SIMILARITY_THRESHOLD)
+            matches = search_similar_features(query_embedding, top_k=5, threshold=SIMILARITY_THRESHOLD)
             st.session_state.all_matches = matches
 
         if matches:
@@ -200,7 +200,7 @@ elif page == "📸 Check-in":
             cols = st.columns(2)
             for i, (name, similarity, _) in enumerate(matches[:5]):
                 card_class = "top-match-card" if i == 0 else "other-match-card"
-                avatar = get_avatar_image(name)
+                avatar = get_avt_img(name)
                 with cols[i % 2]:
                     st.markdown(f"""
                         <div class="{card_class}">
@@ -213,9 +213,7 @@ elif page == "📸 Check-in":
                         </div>
                     """, unsafe_allow_html=True)
 
-# ----------------------
 # Analytics
-# ----------------------
 elif page == "📊 Analytics":
     st.markdown("### 📊 Embedding Space Analysis")
     st.markdown("Explore how employee embeddings are distributed in vector space.")
